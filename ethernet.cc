@@ -12,7 +12,7 @@
 using std::ostream;
 using std::string;
 
-namespace aquatic {
+AQUATIC_NAMESPACE
 
 mac_address::mac_address(string str) {
     int res = sscanf(str.c_str(),
@@ -24,10 +24,10 @@ mac_address::mac_address(string str) {
     }
 }
 
-ostream& mac_address::operator<<(ostream& s) {
+ostream& operator<<(ostream& s, mac_address const& m) {
     s << std::hex;
     for (int i=0; i<6; i++) {
-        s << v[i];
+        s << m.v[i];
         if (i < 5)  s << ":";
     }
     s << std::dec;
@@ -46,12 +46,16 @@ ostream& operator<<(ostream& s, ethertype const& e) {
     return s;
 }
 
-ostream& ethernet_frame::operator<<(ostream& s) {
-    s << "f: " << destination()
-      << ", t: " << source()
-      << ", [" << type() << "]"
+ostream& operator<<(ostream& s, ethernet_frame const& e) {
+    s << "f: ";
+    s << e._destination;
+    s << ", t: ";
+    s << e._source;
+    s << ", [";
+    s << e._type;
+    s << "]";
     return s;
 }
 
-} // namespace aquatic
+AQUATIC_END_NAMESPACE
 

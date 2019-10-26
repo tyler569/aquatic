@@ -8,13 +8,13 @@
 #include "icmp.hh"
 #include "endian.hh"
 
-namespace aquatic {
+AQUATIC_NAMESPACE
 
 class [[gnu::packed]] ipv4_address {
     char v[4];
 
 public:
-    ipv4_address(string);
+    // ipv4_address(string);
 };
 
 enum class ipv4_protocol : uint8_t {
@@ -37,10 +37,11 @@ public:
     ipv4_address _destination;
 
 public:
-    union {
+    union [[gnu::packed]] {
         icmp_message icmp;
     };
 
+public:
     uint8_t version() {
         return _version_ihl >> 4;
     }
@@ -56,7 +57,7 @@ public:
     }
 };
 
-} // namespace aquatic
+AQUATIC_END_NAMESPACE
 
 #endif // AQUATIC_IPV4_HH
 

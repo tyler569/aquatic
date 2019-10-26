@@ -8,7 +8,7 @@
 
 #include <cstdint>
 
-namespace aquatic {
+AQUATIC_NAMESPACE
 
 enum class icmp_type : uint8_t {
     ECHO_REPLY = 0,
@@ -20,12 +20,12 @@ class [[gnu::packed]] icmp_message {
     uint8_t _code;
     uint16_t checksum;
 
-    char _data[];
+    // char _data[];
 
 public:
 };
 
-} // namespace aquatic
+AQUATIC_END_NAMESPACE
 
 #endif // AQUATIC_ICMP_HH
 

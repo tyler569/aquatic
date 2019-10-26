@@ -12,7 +12,7 @@
 using std::cout;
 using std::string;
 
-using namespace aquatic;
+AQUATIC_USING_NAMESPACE;
 
 string adapter_name = "tap0";
 

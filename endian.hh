@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <byteswap.h>
 
-namespace aquatic {
+AQUATIC_NAMESPACE
 
 struct [[gnu::packed]] be16 {
     uint16_t raw;
@@ -24,7 +24,7 @@ struct [[gnu::packed]] be16 {
     }
 };
 
-} // namespace aquatic
+AQUATIC_END_NAMESPACE
 
 #endif // AQUATIC_ENDIAN_HH
 

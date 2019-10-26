@@ -8,11 +8,16 @@
 
 #define AQUATIC_EXTERN_C extern "C" {
 #define AQUATIC_END_C    }
+#define AQUATIC_NAMESPACE     namespace aquatic {
+#define AQUATIC_END_NAMESPACE }
+#define AQUATIC_USING_NAMESPACE using namespace aquatic
 
 #else // defined (__cplusplus)
 
 #define AQUATIC_EXTERN_C
 #define AQUATIC_END_C
+#define AQUATIC_NAMESPACE
+#define AQUATIC_END_NAMESPACE
 
 #endif // defined (__cplusplus)
 

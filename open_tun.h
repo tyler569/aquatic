@@ -6,11 +6,13 @@
 
 #include "basic.h"
 
+AQUATIC_NAMESPACE
 AQUATIC_EXTERN_C
 
 int tun_alloc(const char *tun_name);
 
 AQUATIC_END_C
+AQUATIC_END_NAMESPACE
 
 #endif // AQUATIC_TUN_H
 
