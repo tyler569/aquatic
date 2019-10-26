@@ -1,10 +1,11 @@
 
-CFLAGS= -fPIC
-CXXFLAGS= -fPIC
-
-aquatic: aquatic.o open_tun.o
-	c++ -o $@ $^
+.PHONY: all
+all:
+	mkdir -p build
+	cd build; cmake ..
+	make -C build
 
 .PHONY: clean
 clean:
-	rm -f *.o aquatic
+	[ -d "build" ] && make -C build clean
+

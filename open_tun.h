@@ -6,11 +6,11 @@
 
 #include "basic.h"
 
-AQUATIC_BEGIN_DECLS
+AQUATIC_EXTERN_C
 
 int tun_alloc(const char *tun_name);
 
-AQUATIC_END_DECLS
+AQUATIC_END_C
 
 #endif // AQUATIC_TUN_H
 
