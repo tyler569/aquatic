@@ -8,13 +8,22 @@
 #include "icmp.hh"
 #include "endian.hh"
 
+#include <cstdint>
+#include <string>
+#include <iostream>
+
+using std::string;
+using std::ostream;
+
 AQUATIC_NAMESPACE
 
 class [[gnu::packed]] ipv4_address {
-    char v[4];
+    uint8_t v[4];
 
 public:
-    // ipv4_address(string);
+    ipv4_address(string);
+    
+    friend ostream& operator<<(ostream&, ipv4_address const&);
 };
 
 enum class ipv4_protocol : uint8_t {

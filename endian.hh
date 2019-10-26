@@ -11,16 +11,20 @@
 
 AQUATIC_NAMESPACE
 
+inline uint16_t bswap(uint16_t v) {
+    return __bswap_16(v);
+}
+
 struct [[gnu::packed]] be16 {
     uint16_t raw;
 
     be16 operator=(uint16_t v) {
-        raw = __bswap_16(v);
+        raw = bswap(v);
         return *this;
     }
 
-    uint16_t host() {
-        return __bswap_16(raw);
+    uint16_t host() const {
+        return bswap(raw);
     }
 };
 

@@ -27,7 +27,7 @@ mac_address::mac_address(string str) {
 ostream& operator<<(ostream& s, mac_address const& m) {
     s << std::hex;
     for (int i=0; i<6; i++) {
-        s << m.v[i];
+        s << (int)m.v[i];
         if (i < 5)  s << ":";
     }
     s << std::dec;
@@ -39,6 +39,10 @@ ostream& operator<<(ostream& s, ethertype const& e) {
     switch (e) {
     case ethertype::IP4:
         name = "IP4"; break;
+    case ethertype::ARP:
+        name = "ARP"; break;
+    case ethertype::IP6:
+        name = "IP6"; break;
     default:
         name = "unknown"; break;
     }
@@ -47,13 +51,13 @@ ostream& operator<<(ostream& s, ethertype const& e) {
 }
 
 ostream& operator<<(ostream& s, ethernet_frame const& e) {
-    s << "f: ";
+    s << "ethernet frame {f: ";
     s << e._destination;
     s << ", t: ";
     s << e._source;
-    s << ", [";
-    s << e._type;
-    s << "]";
+    s << ", type:[";
+    s << e.type();
+    s << "]}";
     return s;
 }
 

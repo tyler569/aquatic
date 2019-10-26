@@ -16,11 +16,10 @@ enum class icmp_type : uint8_t {
 };
 
 class [[gnu::packed]] icmp_message {
+public:
     icmp_type _type;
     uint8_t _code;
     uint16_t checksum;
-
-    // char _data[];
 
 public:
 };

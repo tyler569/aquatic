@@ -3,9 +3,12 @@
 
 #include "basic.h"
 #include "open_tun.h"
-#include "endian.hh"
+#include "ethernet.hh"
+#include "arp.hh"
 
+#include <unistd.h>
 #include <cstdio>
+#include <cstdint>
 #include <iostream>
 #include <string>
 
@@ -21,9 +24,26 @@ int main() {
 
     cout << adapter_name << " file descriptor is " << fd << "\n";
 
-    be16 foo{0x100};
-    cout << foo.raw << "\n";
-    cout << foo.host() << "\n";
+    uint8_t packet_buffer[2048];
+
+    while (true) {
+        int len = read(fd, packet_buffer, 2048);
+
+        for (int i=0; i<len; i++) {
+            printf("%02hhx ", packet_buffer[i]);
+            if (i % 16 == 15)
+                printf("\n");
+        }
+        printf("\n");
+
+        ethernet_frame *eth = reinterpret_cast<ethernet_frame *>(packet_buffer);
+        cout << *eth << "\n";
+
+        if (eth->type() == ethertype::ARP) {
+            auto arp = &eth->arp;
+            cout << *arp << "\n";
+        }
+    }
 
     return 0;
 }
