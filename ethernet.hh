@@ -20,9 +20,9 @@ using std::string;
 AQUATIC_NAMESPACE
 
 enum class ethertype : uint16_t {
-    IP4 = 0x0800,
+    IPV4 = 0x0800,
     ARP = 0x0806,
-    IP6 = 0x86DD,
+    IPV6 = 0x86DD,
 };
 
 ostream& operator<<(ostream&, ethertype const&);

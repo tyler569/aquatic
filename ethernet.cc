@@ -17,12 +17,12 @@ AQUATIC_NAMESPACE
 ostream& operator<<(ostream& s, ethertype const& e) {
     string name;
     switch (e) {
-    case ethertype::IP4:
-        name = "IP4"; break;
+    case ethertype::IPV4:
+        name = "IPV4"; break;
     case ethertype::ARP:
         name = "ARP"; break;
-    case ethertype::IP6:
-        name = "IP6"; break;
+    case ethertype::IPV6:
+        name = "IPV6"; break;
     default:
         name = "unknown"; break;
     }

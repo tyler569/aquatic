@@ -6,6 +6,7 @@
 #include "ethernet.hh"
 #include "arp.hh"
 #include "arp_table.hh"
+#include "ipv4.hh"
 
 #include <unistd.h>
 #include <cstdio>
@@ -80,6 +81,9 @@ int main() {
             cout << *arp << "\n";
 
             do_arp(fd, *arp);
+        } else if (eth->type() == ethertype::IPV4) {
+            auto ipv4 = &eth->ipv4;
+            cout << *ipv4 << "\n";
         }
     }
 

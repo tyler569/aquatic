@@ -24,6 +24,8 @@ enum class ipv4_protocol : uint8_t {
     UDP = 17,
 };
 
+ostream& operator<<(ostream&, ipv4_protocol const&);
+
 class [[gnu::packed]] ipv4_packet {
 public:
     uint8_t _version_ihl;
@@ -56,6 +58,8 @@ public:
     uint16_t ident() {
         return _ident.host();
     }
+
+    friend ostream& operator<<(ostream&, ipv4_packet const&);
 };
 
 AQUATIC_END_NAMESPACE
