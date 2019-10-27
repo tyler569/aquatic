@@ -26,14 +26,31 @@ ipv4_address my_ip_address{"10.50.1.2"};
 arp_table global_arp_table;
 
 // Temporary explanitory ARP logic
-int do_arp(arp_message const& arp) {
+int do_arp(int fd, arp_message const& arp) {
     global_arp_table.insert_association(
         arp._sender_mac_address, arp._sender_ipv4_address);
 
     if (arp._target_ipv4_address == my_ip_address &&
         arp.operation() == arp_operation::REQUEST) {
 
-        // respond
+
+        char *response_frame = new char[2048];
+        auto frame = reinterpret_cast<ethernet_frame *>(response_frame);
+        frame->_source = my_mac_address;
+        frame->_destination = arp._sender_mac_address;
+        frame->_type = (uint16_t)ethertype::ARP;
+
+        auto r_arp = &frame->arp;
+        memcpy(r_arp, &arp, sizeof(arp_message));
+
+        r_arp->_operation = (uint16_t)arp_operation::REPLY;
+        r_arp->_target_mac_address = arp._sender_mac_address;
+        r_arp->_target_ipv4_address = arp._sender_ipv4_address;
+        r_arp->_sender_mac_address = my_mac_address;
+        r_arp->_sender_ipv4_address = arp._target_ipv4_address;
+
+        cout << "respding with: " << *r_arp << "\n";
+        write(fd, frame, sizeof(ethernet_frame));
     }
 
     return 0;
@@ -62,7 +79,7 @@ int main() {
             auto arp = &eth->arp;
             cout << *arp << "\n";
 
-            do_arp(*arp);
+            do_arp(fd, *arp);
         }
     }
 
