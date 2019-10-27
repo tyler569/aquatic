@@ -24,12 +24,6 @@ mac_address::mac_address(string str) {
     }
 }
 
-mac_address::mac_address() {
-    for (int i=0; i<6; i++) {
-        v[i] = 0;
-    }
-}
-
 ostream& operator<<(ostream& s, mac_address const& m) {
     s << std::hex;
     for (int i=0; i<6; i++) {

@@ -20,8 +20,8 @@ struct [[gnu::packed]] mac_address {
     uint8_t v[6];
 
 public:
-    mac_address();
     mac_address(string);
+    mac_address() = default;
 
     bool operator==(mac_address const& other) const {
         return memcmp(v, other.v, 6) == 0;
