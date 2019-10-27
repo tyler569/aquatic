@@ -31,13 +31,13 @@ ostream& operator<<(ostream& s, ethertype const& e) {
 }
 
 ostream& operator<<(ostream& s, ethernet_frame const& e) {
-    s << "ethernet frame {f: ";
+    s << "ethernet frame { from: ";
     s << e._destination;
-    s << ", t: ";
+    s << ", to: ";
     s << e._source;
-    s << ", type:[";
+    s << ", ethertype: [";
     s << e.type();
-    s << "]}";
+    s << "] }";
     return s;
 }
 
