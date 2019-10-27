@@ -23,8 +23,11 @@ public:
     mac_address();
     mac_address(string);
 
-    bool operator==(mac_address const& othr) const {
-        return memcmp(this->v, othr.v, 6) == 0;
+    bool operator==(mac_address const& other) const {
+        return memcmp(v, other.v, 6) == 0;
+    }
+    bool operator<(mac_address const& other) const {
+        return memcmp(v, other.v, 6) < 0;
     }
 
     friend ostream& operator<<(ostream& s, mac_address const&);

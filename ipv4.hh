@@ -5,6 +5,7 @@
 #define AQUATIC_IPV4_HH
 
 #include "basic.h"
+#include "ipv4_address.hh"
 #include "icmp.hh"
 #include "endian.hh"
 
@@ -16,15 +17,6 @@ using std::string;
 using std::ostream;
 
 AQUATIC_NAMESPACE
-
-class [[gnu::packed]] ipv4_address {
-    uint8_t v[4];
-
-public:
-    ipv4_address(string);
-    
-    friend ostream& operator<<(ostream&, ipv4_address const&);
-};
 
 enum class ipv4_protocol : uint8_t {
     ICMP = 1,

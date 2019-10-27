@@ -5,6 +5,7 @@
 #include "open_tun.h"
 #include "ethernet.hh"
 #include "arp.hh"
+#include "arp_table.hh"
 
 #include <unistd.h>
 #include <cstdio>
@@ -19,9 +20,27 @@ AQUATIC_USING_NAMESPACE;
 
 string adapter_name = "tap0";
 
+mac_address my_mac_address{"66:00:00:11:22:33"};
+ipv4_address my_ip_address{"10.50.1.2"};
+
+arp_table global_arp_table;
+
+// Temporary explanitory ARP logic
+int do_arp(arp_message const& arp) {
+    global_arp_table.insert_association(
+        arp._sender_mac_address, arp._sender_ipv4_address);
+
+    if (arp._target_ipv4_address == my_ip_address &&
+        arp.operation() == arp_operation::REQUEST) {
+
+        // respond
+    }
+
+    return 0;
+}
+
 int main() {
     int fd = tun_alloc(adapter_name.c_str());
-
     cout << adapter_name << " file descriptor is " << fd << "\n";
 
     uint8_t packet_buffer[2048];
@@ -42,6 +61,8 @@ int main() {
         if (eth->type() == ethertype::ARP) {
             auto arp = &eth->arp;
             cout << *arp << "\n";
+
+            do_arp(*arp);
         }
     }
 

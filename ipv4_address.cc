@@ -16,7 +16,7 @@ AQUATIC_NAMESPACE
 
 ipv4_address::ipv4_address(string str) {
     int res = sscanf(str.c_str(),
-        "%02hhu:%02hhu:%02hhu:%02hhu",
+        "%02hhu.%02hhu.%02hhu.%02hhu",
         &v[0], &v[1], &v[2], &v[3]
     );
     if (res != 4) {
