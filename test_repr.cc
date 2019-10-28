@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstdint>
 #include <iostream>
+#include <memory>
 #include <string>
 
 class [[gnu::packed]] ethernet {
@@ -42,6 +43,7 @@ template <typename Encap>
 class [[gnu::packed]] udp : public Encap {
 public:
     int e, f;
+    char data[];
 
     udp() {
         e = 0xeeeeeeee;
@@ -60,11 +62,23 @@ int dump(const char *ptr, int len) {
     return 0;
 }
 
+using udpip = udp<ipv4<ethernet>>;
+
 int main() {
     udp<ipv4<ethernet>> i1{};
     udp<ipv6<ethernet>> i6{};
 
     dump(reinterpret_cast<const char *>(&i1), sizeof(i1));
     dump(reinterpret_cast<const char *>(&i6), sizeof(i6));
+
+    /*
+     * This is promising!
+     */
+    auto packet = std::make_unique<char[]>(sizeof(udpip) + 128);
+    auto udp_pkt = new(packet.get()) udpip();
+    for (int i=0; i<128; i++) {
+        udp_pkt->data[i] = i;
+    }
+    dump(packet.get(), sizeof(udpip) + 128);
 }
 
